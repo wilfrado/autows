@@ -1,0 +1,26 @@
+- name: DEPLOY AS3
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    uri_method: POST
+
+  vars_files:
+    - ../Creds/creds.yaml
+
+  tasks:
+
+    - name: Create a JIRA issue
+      uri:
+        url: https://108.128.216.12/mgmt/shared/appsvcs/declare
+        user: admin
+        password: autows123!!
+        method: "{{uri_method}}"
+        body: "{{ lookup('file','./as3-3-virtual.json') }}"
+        force_basic_auth: yes
+        status_code: 201
+        body_format: json
+        validate_certs: no
+
+

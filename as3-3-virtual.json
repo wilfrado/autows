@@ -1,0 +1,90 @@
+{
+    "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema-3.11.0-3.json",
+    "class": "AS3",
+    "action": "deploy",
+    "persist": true,
+    "declaration": {
+       "class": "ADC",
+       "schemaVersion": "3.0.0",
+       "id": "fghijkl7890",
+       "label": "Sample 6",
+       "remark": "HTTP two applications",
+       "SW_APP": {
+          "class": "Tenant",
+          "A1": {
+             "class": "Application",
+             "template": "http",
+             "serviceMain": {
+                "class": "Service_HTTP",
+                "virtualAddresses": [
+                   "10.1.3.100"
+                ],
+                "pool": "web_pool"
+             },
+             "web_pool": {
+                "class": "Pool",
+                "monitors": [
+                   "http"
+                ],
+                "members": [{
+                   "servicePort": 80,
+                   "serverAddresses": [
+                      "10.1.3.101",
+                      "10.1.3.102"
+                   ]
+                }]
+             }
+          },
+          "A2": {
+             "class": "Application",
+             "template": "generic",
+             "application_1": {
+                "class": "Service_HTTP",
+                "virtualAddresses": [
+                   "10.1.3.200"
+                ],
+                "pool": "web_pool2",
+                "virtualPort": 80
+             },
+             "web_pool2": {
+                "class": "Pool",
+                "monitors": [
+                   "http"
+                ],
+                "members": [{
+                   "servicePort": 80,
+                   "serverAddresses": [
+                      "10.1.3.201",
+                      "10.1.3.202"
+                   ]
+                }]
+             }
+          },
+          "A3": {
+            "class": "Application",
+            "template": "generic",
+            "application_2": {
+               "class": "Service_TCP",
+               "virtualAddresses": [
+                  "10.1.3.150"
+               ],
+               "pool": "web_pool3",
+               "virtualPort": 80
+            },
+            "web_pool3": {
+               "class": "Pool",
+               "monitors": [
+                  "tcp"
+               ],
+               "members": [{
+                  "servicePort": 21,
+                  "serverAddresses": [
+                     "10.1.3.151",
+                     "10.1.3.152"
+                  ]
+               }]
+            }
+         }
+       }
+    }
+}
