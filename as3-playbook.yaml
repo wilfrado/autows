@@ -4,7 +4,7 @@
   gather_facts: no
 
   vars:
-    uri_method: POST
+    uri_method: GET
 
   vars_files:
     - ../Creds/creds.yaml
